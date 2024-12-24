@@ -30,13 +30,13 @@ const FormNavigation = () => {
 
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto', mt: 5 }}>
-      <Typography variant="h5" textAlign="center" sx={{mb:3}}>
+      <Typography variant="body1" fontSize={24} textAlign="center" sx={{mb:3, color:'#7E7E7E'}}>
               Register a new patient
       </Typography>
       <Stepper activeStep={activeStep} nonLinear  >
         {steps.map((label, index) => (
-          <Step key={index} sx={{backgroundColor:'#848d5e', borderRadius:'20px', paddingY:'8px', color:'#fff'}}>
-            <StepLabel sx={{ fill:'#fff'}}>{label}</StepLabel>
+          <Step  key={index} sx={{backgroundColor: activeStep == index && '#848D5E', borderRadius:'20px', paddingY:'8px'}}>
+            <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>

@@ -2,18 +2,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateAssignResources, updatePatientDetails } from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 const LegalDocuments = ({ nextNestedStep, prevNestedStep }) => {
   const dispatch = useDispatch();
+  const legalDocs = useSelector(state=>state.form?.patientDetails?.legalDocuments)
 
   const formik = useFormik({
-    initialValues: {
-      idType: '',
-      idNo: '',
-    },
+    initialValues: legalDocs,
     validationSchema: Yup.object({
       idType: Yup.string().required('Resource type is required'),
       idNo: Yup.number()

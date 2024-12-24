@@ -2,19 +2,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updatePatientDetails } from '../store/formSlice';
 import { TextField, Button, Box } from '@mui/material';
 
 const BasicDetails = ({ nextNestedStep }) => {
   const dispatch = useDispatch();
+  const basicDtl = useSelector(state=>state.form?.patientDetails?.basicDetails)
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      age: '',
-      gender: '',
-    },
+    initialValues: basicDtl,
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
       age: Yup.number().required('Age is required').min(1, 'Age must be a positive number'),

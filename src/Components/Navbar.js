@@ -3,9 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Box, IconButton, Badge } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import MailIcon from '@mui/icons-material/Mail';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -28,20 +29,24 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ background: "#fff", color:'#000' }}>
+    <AppBar position="static" sx={{ background: "#fff", color: '#6F6F6F',boxShadow: 'none'  }} >
       <Toolbar>
         {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           My Application
         </Typography> */}
-        <Button color="inherit" component={Link} to="/">
+        <Box sx={{ display: 'flex', flexGrow: 1, py:3}}>
+
+        <Button sx={{ml:1,  textTransform: 'none'}} color="inherit" component={Link}  to="/">
           Dashboard
         </Button>
-        <Button color="inherit" component={Link} to="/patient-register">
+        <Button sx={{ml:1,  textTransform: 'none'}} color="inherit" component={Link} to="/patient-register"           
+        >
           Patient Register
         </Button>
-        <Button
+        <Button sx={{ml:1, textTransform: 'none'}} 
           color="inherit"
           onClick={handleMenuOpen2}
+          endIcon={<ArrowDropDownIcon />}
         >
           Patient Data
         </Button>
@@ -53,11 +58,12 @@ const Navbar = () => {
           <MenuItem onClick={handleMenuClose2} component={Link} to="/patient-data">Patient Sub Page</MenuItem>
           <MenuItem onClick={handleMenuClose2} component={Link} to="/patient-data">Patient Sub Page</MenuItem>
         </Menu>
-        <Button
+        <Button sx={{ml:1, textTransform: 'none'}} 
           color="inherit"
           onClick={handleMenuOpen}
+          endIcon={<ArrowDropDownIcon />}
         >
-          Operation Theater
+          <Typography fontSize={12}>Operation Theater</Typography>
         </Button>
         <Menu
           anchorEl={anchorEl}
@@ -67,43 +73,44 @@ const Navbar = () => {
           <MenuItem onClick={handleMenuClose} component={Link} to="/operation-theater">Sub-page 1</MenuItem>
           <MenuItem onClick={handleMenuClose} component={Link} to="/operation-theater">Sub-page 2</MenuItem>
         </Menu>
-        <Button color="inherit" component={Link} to="/reports">
+        <Button sx={{ml:0, py:2,   textTransform: 'none'
+}} color="inherit" component={Link} to="/reports">
           Reports
         </Button>
-       <Menu>
-       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
+        </Box>
+       <MenuItem sx={{p:0}}>
+        <IconButton color="inherit" disableRipple>
+            <HelpOutlineIcon sx={{color:'revert'}} />
         </IconButton>
-        <p>Messages</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem sx={{p:0}}>
         <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
           color="inherit"
+          disableRipple
         >
-          <Badge badgeContent={17} color="error">
+          <Badge variant="dot" color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
       </MenuItem>
-      <MenuItem >
+      {/* <MenuItem sx={{p:0}}> */}
         <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
+          // size="large"
           color="inherit"
+          disableRipple
         >
-          <AccountCircle />
+          <AccountBoxIcon sx={{fontSize:'40px'}} />
         </IconButton>
-        <p>Profile</p>
+        <Box sx={{display:'flex', flexDirection:'column'}}>
+        <Typography variant='body1' fontSize={12} fontWeight={600}>Hardeep</Typography>
+        <Typography variant='subtitle2' fontSize={12} color='lightGrey' >STAFF</Typography>
+        </Box>
+        <MenuItem sx={{px:4}}>
+        <IconButton size='small' color="inherit" disableRipple >
+            <LogoutIcon sx={{color:'revert', fontSize:'16px'}} />
+        </IconButton>
       </MenuItem>
-       </Menu>
+      {/* </MenuItem> */}
       </Toolbar>
      
     </AppBar>

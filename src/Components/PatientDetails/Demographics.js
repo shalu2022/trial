@@ -2,24 +2,22 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateDoctorTestReport, updatePatientDetails } from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 const Demographics = ({ prevStep, nextStep }) => {
   const dispatch = useDispatch();
+  const demographicDtl = useSelector(state=>state.form?.patientDetails?.demographics)
+
 
   const formik = useFormik({
-    initialValues: {
-      email: '',
-      dob: '',
-    },
+    initialValues: demographicDtl,
     validationSchema: Yup.object({
       email: Yup.string().required('email name is required'),
       dob: Yup.date().required('DOB is required').nullable(),
     }),
     onSubmit: (values) => {dispatch(updatePatientDetails({section: 'demographics', values}));    
-    alert('Form submitted successfully!'); // Temporary feedback for submission
       nextStep();
     },
   });

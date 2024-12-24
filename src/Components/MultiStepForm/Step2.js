@@ -2,18 +2,17 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateAssignResources } from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 const Step2 = ({ nextStep, prevStep }) => {
   const dispatch = useDispatch();
+  const assignResDtl = useSelector(state=>state.form?.assignResources)
+
 
   const formik = useFormik({
-    initialValues: {
-      resourceType: '',
-      resourceCount: '',
-    },
+    initialValues: assignResDtl,
     validationSchema: Yup.object({
       resourceType: Yup.string().required('Resource type is required'),
       resourceCount: Yup.number()

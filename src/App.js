@@ -5,10 +5,12 @@ import './App.css'
 import Navbar from './Components/Navbar';
 // import MultiStepForm from './Components/MultiStepForm/Step1'; // Adjust the import based on form navigation
 import FormNavigation from './Components//MultiStepForm/FormNavigation';
+import { Container } from '@mui/material';
 
 const App = () => {
   return (
-    <div>
+    <div >
+      <Container maxWidth="lg">
       <Navbar />
       <Routes>
         <Route path="/" element={<div>Welcome to the Dashboard</div>} />
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/operation-theater" element={<div>Operation Theater Page</div>} />
         <Route path="/reports" element={<div>Reports Page</div>} />
       </Routes>
+      </Container>
+
     </div>
   );
 };

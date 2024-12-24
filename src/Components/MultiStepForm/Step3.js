@@ -2,19 +2,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { submitFormData, updateDoctorTestReport } from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 const Step3 = ({ prevStep }) => {
   const dispatch = useDispatch();
+  const doctorTestReportDtl = useSelector(state=>state.form?.doctorTestReport)
 
   const formik = useFormik({
-    initialValues: {
-      testName: '',
-      testResult: '',
-      testDate: '',
-    },
+    initialValues: doctorTestReportDtl,
     validationSchema: Yup.object({
       testName: Yup.string().required('Test name is required'),
       testResult: Yup.string().required('Test result is required'),
