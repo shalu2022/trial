@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitFormData, updateDoctorTestReport } from '../store/formSlice';
+import { submitFormData, updateDoctorTestReport, resetForm} from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 const Step3 = ({ prevStep }) => {
@@ -12,15 +12,19 @@ const Step3 = ({ prevStep }) => {
 
   const formik = useFormik({
     initialValues: doctorTestReportDtl,
+    enableReinitialize: true,
     validationSchema: Yup.object({
       testName: Yup.string().required('Test name is required'),
       testResult: Yup.string().required('Test result is required'),
-      testDate: Yup.date().required('Test date is required').nullable(),
+      testDate: Yup.date().required('Test date is required'),
+      remark: Yup.string().nullable(),
     }),
     onSubmit: (values) => {
       dispatch(updateDoctorTestReport(values));
       alert('Form submitted successfully!'); // Temporary feedback for submission
       dispatch(submitFormData())
+      dispatch(resetForm())
+      formik.resetForm();
     },
   });
 
@@ -64,6 +68,15 @@ const Step3 = ({ prevStep }) => {
         error={formik.touched.testDate && Boolean(formik.errors.testDate)}
         helperText={formik.touched.testDate && formik.errors.testDate}
         // required
+      />
+       <TextField
+        label="Remark"
+        name="remark"
+        value={formik.values.remark}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.remark && Boolean(formik.errors.remark)}
+        helperText={formik.touched.remark && formik.errors.remark}
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button variant="outlined" onClick={prevStep}>

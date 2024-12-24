@@ -13,6 +13,7 @@ const Step2 = ({ nextStep, prevStep }) => {
 
   const formik = useFormik({
     initialValues: assignResDtl,
+    enableReinitialize: true,
     validationSchema: Yup.object({
       resourceType: Yup.string().required('Resource type is required'),
       resourceCount: Yup.number()

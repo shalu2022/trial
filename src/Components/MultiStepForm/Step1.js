@@ -15,6 +15,7 @@ const Step1 = ({ nextStep }) => {
       age: '',
       gender: '',
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
       age: Yup.number().required('Age is required').min(1, 'Age must be a positive number'),

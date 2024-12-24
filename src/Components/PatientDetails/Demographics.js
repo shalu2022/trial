@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateDoctorTestReport, updatePatientDetails } from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
-const Demographics = ({ prevStep, nextStep }) => {
+const Demographics = ({ prevNestedStep, nextStep }) => {
   const dispatch = useDispatch();
   const demographicDtl = useSelector(state=>state.form?.patientDetails?.demographics)
 
 
   const formik = useFormik({
     initialValues: demographicDtl,
+    enableReinitialize: true,
     validationSchema: Yup.object({
-      email: Yup.string().required('email name is required'),
+      email: Yup.string().nullable(true).email(),
       dob: Yup.date().required('DOB is required').nullable(),
     }),
     onSubmit: (values) => {dispatch(updatePatientDetails({section: 'demographics', values}));    
@@ -29,9 +30,10 @@ const Demographics = ({ prevStep, nextStep }) => {
       sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto', mt: 5 }}
     >
       <TextField
-        label="D.O.B"
+        label="D.O.B*"
         name="dob"
         type="date"
+        InputLabelProps={{ shrink: true }}
         value={formik.values.dob}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -40,7 +42,7 @@ const Demographics = ({ prevStep, nextStep }) => {
         // required
       />
       <TextField
-        label="Email"
+        label="Email*"
         name="email"
         value={formik.values.email}
         onChange={formik.handleChange}
@@ -50,7 +52,7 @@ const Demographics = ({ prevStep, nextStep }) => {
         // required
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button variant="outlined" onClick={prevStep}>
+        <Button variant="outlined" onClick={prevNestedStep}>
           Back
         </Button>
         <Button type="submit" variant="contained" color="primary">

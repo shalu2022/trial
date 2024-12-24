@@ -26,6 +26,7 @@ const initialState = {
     testName: '',
     testResult: '',
     testDate: '',
+    remark: ''
   },
 };
 

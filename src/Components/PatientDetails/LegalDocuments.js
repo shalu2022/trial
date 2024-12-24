@@ -12,11 +12,10 @@ const LegalDocuments = ({ nextNestedStep, prevNestedStep }) => {
 
   const formik = useFormik({
     initialValues: legalDocs,
+    enableReinitialize: true,
     validationSchema: Yup.object({
-      idType: Yup.string().required('Resource type is required'),
-      idNo: Yup.number()
-        .required('Resource count is required')
-        .min(1, 'Resource count must be at least 1'),
+      idType: Yup.string().required('Id type is required'),
+      idNo: Yup.string().required('Id No is required').matches(/^[a-zA-Z0-9]+$/i, "ID Number must be alphanumeric only ")
     }),
     onSubmit: (values) => {
     dispatch(updatePatientDetails({section: 'legalDocuments', values}));    
@@ -31,25 +30,22 @@ const LegalDocuments = ({ nextNestedStep, prevNestedStep }) => {
       sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto', mt: 5 }}
     >
       <TextField
-        label="ID Type"
+        label="ID Type*"
         name="idType"
         value={formik.values.idType}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.idType && Boolean(formik.errors.idType)}
         helperText={formik.touched.idType && formik.errors.idType}
-        // required
       />
       <TextField
-        label="ID No."
+        label="ID No.*"
         name="idNo"
-        type="number"
         value={formik.values.idNo}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.idNo && Boolean(formik.errors.idNo)}
         helperText={formik.touched.idNo && formik.errors.idNo}
-        // required
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button variant="outlined" onClick={prevNestedStep}>
