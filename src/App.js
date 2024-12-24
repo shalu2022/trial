@@ -9,9 +9,9 @@ import { Container } from '@mui/material';
 
 const App = () => {
   return (
-    <div >
-      <Container maxWidth="lg">
+    <div  style={{backgroundColor:'#F4F2F0', height:'100vh'}}>
       <Navbar />
+      <Container maxWidth="lg" >
       <Routes>
         <Route path="/" element={<div>Welcome to the Dashboard</div>} />
         <Route path="/patient-register" element={<FormNavigation />} />

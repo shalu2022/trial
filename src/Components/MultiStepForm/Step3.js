@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { submitFormData, updateDoctorTestReport, resetForm} from '../store/formSlice';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
-const Step3 = ({ prevStep }) => {
+const Step3 = ({ prevStep, setActiveStep }) => {
   const dispatch = useDispatch();
   const doctorTestReportDtl = useSelector(state=>state.form?.doctorTestReport)
 
@@ -25,6 +25,7 @@ const Step3 = ({ prevStep }) => {
       dispatch(submitFormData())
       dispatch(resetForm())
       formik.resetForm();
+      setActiveStep(0)
     },
   });
 

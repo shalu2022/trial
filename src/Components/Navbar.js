@@ -29,26 +29,26 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ background: "#fff", color: '#6F6F6F',boxShadow: 'none'  }} >
+    <AppBar position="static" sx={{ background: "#fff", color: '#6F6F6F',boxShadow: 'none', py:1 }} >
       <Toolbar>
         {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           My Application
         </Typography> */}
-        <Box sx={{ display: 'flex', flexGrow: 1, py:3}}>
+        <Box sx={{ display: 'flex', flexGrow: 1, paddingLeft:30}}>
 
-        <Button sx={{ml:1,  textTransform: 'none'}} color="inherit" component={Link}  to="/">
-          Dashboard
+        <Button sx={{ml:1,  textTransform: 'none'}} color="inherit" component={Link}  to="/">          
+          <Typography fontSize={12}>Dashboard</Typography>
         </Button>
         <Button sx={{ml:1,  textTransform: 'none'}} color="inherit" component={Link} to="/patient-register"           
-        >
-          Patient Register
+        >          
+          <Typography fontSize={12}>Patient Register</Typography>
         </Button>
         <Button sx={{ml:1, textTransform: 'none'}} 
           color="inherit"
           onClick={handleMenuOpen2}
           endIcon={<ArrowDropDownIcon />}
-        >
-          Patient Data
+        >          
+          <Typography fontSize={12}>Patient Data</Typography>
         </Button>
         <Menu
           anchorEl={anchorEl2}
@@ -74,8 +74,8 @@ const Navbar = () => {
           <MenuItem onClick={handleMenuClose} component={Link} to="/operation-theater">Sub-page 2</MenuItem>
         </Menu>
         <Button sx={{ml:0, py:2,   textTransform: 'none'
-}} color="inherit" component={Link} to="/reports">
-          Reports
+}} color="inherit" component={Link} to="/reports">          
+          <Typography fontSize={12}>Reports</Typography>
         </Button>
         </Box>
        <MenuItem sx={{p:0}}>

@@ -1,76 +1,47 @@
-// Step1.js - Multi-Step Form: Patient Details with Formik
-import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { updatePatientDetails } from '../store/formSlice';
-import { TextField, Button, Box, Typography } from '@mui/material';
+// Step1.js - Multi-Step Form: Patient Details with Nested Stepper
+import React, { useState } from 'react';
+import { Box, Button, Stepper, Step, StepLabel, Typography, Paper } from '@mui/material';
+import BasicDetails from '../PatientDetails/BasicDetails';
+import LegalDocuments from '../PatientDetails/LegalDocuments';
+import Demographics from '../PatientDetails/Demographics';
+
+const nestedSteps = ['Basic Details', 'Legal Documents', 'Demographics'];
 
 const Step1 = ({ nextStep }) => {
-  const dispatch = useDispatch();
+  const [activeNestedStep, setActiveNestedStep] = useState(0);
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      age: '',
-      gender: '',
-    },
-    enableReinitialize: true,
-    validationSchema: Yup.object({
-      name: Yup.string().required('Name is required'),
-      age: Yup.number().required('Age is required').min(1, 'Age must be a positive number'),
-      gender: Yup.string().required('Gender is required'),
-    }),
-    onSubmit: (values) => {
-      dispatch(updatePatientDetails(values));
-      nextStep();
-    },
-  });
+  const nextNestedStep = () => setActiveNestedStep((prev) => prev + 1);
+  const prevNestedStep = () => setActiveNestedStep((prev) => prev - 1);
+
+  const renderNestedStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <BasicDetails nextNestedStep={nextNestedStep} />;
+      case 1:
+        return <LegalDocuments nextNestedStep={nextNestedStep} prevNestedStep={prevNestedStep} />;
+      case 2:
+        return <Demographics prevNestedStep={prevNestedStep} nextStep={nextStep}/>;
+      default:
+        return <BasicDetails nextNestedStep={nextNestedStep} />;
+    }
+  };
 
   return (
-    <Box
-      component="form"
-      onSubmit={formik.handleSubmit}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto', mt: 5 }}
-    >
-      <Typography variant="h5" textAlign="center">
+    <Paper>
+    <Box sx={{ maxWidth: 800, margin: 'auto', mt: 2 , p:3}}>
+      <Typography variant="h5" textAlign="center" gutterBottom>
         Patient Details
       </Typography>
-      <TextField
-        label="Name"
-        name="name"
-        value={formik.values.name}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.name && Boolean(formik.errors.name)}
-        helperText={formik.touched.name && formik.errors.name}
-        // required
-      />
-      <TextField
-        label="Age"
-        name="age"
-        type="number"
-        value={formik.values.age}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.age && Boolean(formik.errors.age)}
-        helperText={formik.touched.age && formik.errors.age}
-        // required
-      />
-      <TextField
-        label="Gender"
-        name="gender"
-        value={formik.values.gender}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.gender && Boolean(formik.errors.gender)}
-        helperText={formik.touched.gender && formik.errors.gender}
-        // required
-      />
-      <Button type="submit" variant="contained" color="primary">
-        Next
-      </Button>
+      <Stepper activeStep={activeNestedStep} alternativeLabel>
+        {nestedSteps.map((label, index) => (
+          <Step key={index}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <Box sx={{ mt: 1 }}>{renderNestedStepContent(activeNestedStep)}</Box>
     </Box>
+      </Paper>
   );
 };
 

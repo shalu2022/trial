@@ -4,7 +4,6 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import { Stepper, Step, StepLabel, Box, Button, Typography } from '@mui/material';
-import FirstStep from './FirstStep';
 
 const steps = ['Patient Details', 'Assign Resources', 'Doctor Test Report'];
 
@@ -18,25 +17,25 @@ const FormNavigation = () => {
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
-        return <FirstStep nextStep={nextStep} />;
+        return <Step1 nextStep={nextStep} />;
       case 1:
         return <Step2 nextStep={nextStep} prevStep={prevStep} />;
       case 2:
-        return <Step3 prevStep={prevStep} />;
+        return <Step3 prevStep={prevStep} setActiveStep={setActiveStep}/>;
       default:
-        return <FirstStep nextStep={nextStep} />;
+        return <Step1 nextStep={nextStep} />;
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 600, margin: 'auto', mt: 5 }}>
+    <Box sx={{ maxWidth: 600, margin: 'auto', mt: 2 }}>
       <Typography variant="body1" fontSize={24} textAlign="center" sx={{mb:3, color:'#7E7E7E'}}>
               Register a new patient
       </Typography>
       <Stepper activeStep={activeStep} nonLinear  >
         {steps.map((label, index) => (
           <Step  key={index} sx={{backgroundColor: activeStep == index && '#848D5E', borderRadius:'20px', paddingY:'8px'}}>
-            <StepLabel>{label}</StepLabel>
+            <StepLabel sx={{backgroundColor:"transparent"}}><span style={{color:activeStep == index && "#fff"}}>{label}</span></StepLabel>
           </Step>
         ))}
       </Stepper>
